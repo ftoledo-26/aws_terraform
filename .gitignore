@@ -3,3 +3,6 @@
 .terraform.lock.hcl
 *.pem
 ./.terraform.lock.hcl
+awscliv2.zip
+aws/
+terraform.tfstate

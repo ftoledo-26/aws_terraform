@@ -15,46 +15,38 @@ provider "aws" {
 resource "aws_security_group" "ssh" {
     name = "ssh-demo-lamp"
     description = "Allow SSH traffic"
-    vpc_id = data.aws_vpc.default_vpc.id
 }
 
-resource "aws_security_group_rule" "ssh_ingress" {
-  type              = "ingress"
+resource "aws_vpc_security_group_ingress_rule" "ssh_ingress" {
+  cidr_ipv4         = "0.0.0.0/0"
   from_port         = 22
   to_port           = 22
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  ip_protocol       = "tcp"
   security_group_id = aws_security_group.ssh.id
 }
 
 resource "aws_security_group" "http" {
     name = "http-demo-lamp"
     description = "Allow Http traffic"
-    vpc_id = data.aws_vpc.default_vpc.id
 }
 
-resource "aws_security_group_rule" "http_ingress" {
-  type              = "ingress"
+resource "aws_vpc_security_group_ingress_rule" "http_ingress" {
   from_port         = 80
   to_port           = 80
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  ip_protocol = "TCP"
+  cidr_ipv4 = "0.0.0.0/0"
   security_group_id = aws_security_group.http.id
 }
 
 resource "aws_security_group" "all" {
     name = "all-demo-lamp"
     description = "Allow All Egress traffic"
-    vpc_id = data.aws_vpc.default_vpc.id
 }
 
-resource "aws_security_group_rule" "all_egress" {
-  type              = "egress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.all.id
+resource "aws_vpc_security_group_egress_rule" "all_egress" {
+  security_group_id   = aws_security_group.all.id
+  ip_protocol          = "-1"
+  cidr_ipv4 = "0.0.0.0/0"
 }
 
 resource "aws_instance" "web_server" {
