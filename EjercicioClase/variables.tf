@@ -26,7 +26,7 @@ data "aws_vpc" "default_vpc" {
 variable "domain" {
 	description = "Name of domain"
   type        = string
-  default = "opavoloko.es"
+  default = "opavoloko.com"
 }
 
 variable "instance_type" {
