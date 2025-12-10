@@ -12,9 +12,19 @@ systemctl restart apache2
 
 cat > /etc/apache2/sites-available/001-frontend.conf << EOF
 <VirtualHost *:80>
+    ServerName frontend.prueba.com
+    ServerAlias www.frontend.prueba.com
+
+    DocumentRoot /var/www/html
+
+    <Directory /var/www/html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
     ProxyPass "/api/" "http://${backend_ip}/"
     ProxyPassReverse "/api/" "http://${backend_ip}/"
-    DocumentRoot /var/www/html
 </VirtualHost>
 EOF
 a2ensite 001-frontend.conf
@@ -34,4 +44,9 @@ EOF
 systemctl restart apache2
 systemctl reload apache2
 
+
+#sudo apt update
+#sudo apt install certbot python3-certbot-apache -y
+#sudo certbot --apache -d frontend.prueba.com -d www.frontend.prueba.com
+#sudo systemctl status certbot.timer
 
