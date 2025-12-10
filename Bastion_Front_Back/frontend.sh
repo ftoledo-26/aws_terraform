@@ -49,4 +49,4 @@ systemctl reload apache2
 #sudo apt install certbot python3-certbot-apache -y
 #sudo certbot --apache -d frontend.prueba.com -d www.frontend.prueba.com
 #sudo systemctl status certbot.timer
-
+#echo Listen 8008 > /etc/apache2/ports.conf
