@@ -58,7 +58,7 @@ resource "aws_instance" "web_server" {
     aws_security_group.http.id,
     aws_security_group.ssh.id,
   ]
-  user_data = file("web_server_user_data.sh")
+  user_data = file("install_tomcat.sh")
   user_data_replace_on_change = true
   tags = {
     Name  = "Web_server_Rute53"
